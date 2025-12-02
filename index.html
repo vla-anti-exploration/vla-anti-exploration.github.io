@@ -15,6 +15,26 @@
         });
       });
     </script>
+
+    <style>
+      .image-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px; /* 两张图片之间的间距 */
+        margin-top: 10px;
+      }
+      .image-container img {
+        max-width: 10%;   /* 最大宽度限制 */
+        max-height: 120px;   /* 最大高度限制 */
+        width: auto;
+        height: auto;
+        border: 2px solid #ffffff;
+        border-radius: 10px;
+      }
+
+    </style>
+
   </head>
   <head>
     <title>
@@ -76,17 +96,27 @@
               <div class="is-size-5 publication-authors">
                 <span class="author-block">
                   <a>Siyuan Yang</a><sup>1,2,*</sup>&nbsp;&nbsp;&nbsp;
-                  <a>Yang Zhang</a><sup>3,2,*,‡</sup>&nbsp;&nbsp;&nbsp;
+                  <a>Yang Zhang</a><sup>1,3,*,‡</sup>&nbsp;&nbsp;&nbsp;
                   <a>Haoran He</a><sup>4</sup>&nbsp;&nbsp;&nbsp;
                   <a>Ling Pan</a><sup>4</sup>&nbsp;&nbsp;&nbsp;
                   <a>Xiu Li</a><sup>3</sup>&nbsp;&nbsp;&nbsp;
-                  <a target="_blank" href="https://baichenjia.github.io/">Chenjia Bai</a><sup>2,†</sup>&nbsp;&nbsp;&nbsp;
-                  <a>Xuelong Li</a><sup>2,†</sup>&nbsp;&nbsp;&nbsp;
-                  <br /><sup>1</sup>University of Science and Technology of China&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<sup>2</sup>Institute of Artificial Intelligence, China Telecom
+                  <a target="_blank" href="https://baichenjia.github.io/">Chenjia Bai</a><sup>1,†</sup>&nbsp;&nbsp;&nbsp;
+                  <a>Xuelong Li</a><sup>1,†</sup>&nbsp;&nbsp;&nbsp;
+                  <br /><sup>1</sup>Institute of Artificial Intelligence, China Telecom&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<sup>2</sup>University of Science and Technology of China
                   <br /><sup>3</sup>Tsinghua University&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<sup>4</sup>The Hong Kong University of Science and Technology
                   <br> <sup>*</sup>Equal contributions &nbsp;&nbsp;&nbsp;<sup>†</sup>Corresponding authors &nbsp;&nbsp;&nbsp;<sup>‡</sup>Project Leader
                 </span>
               </div>
+
+              <!-- Logos row -->
+              <div class="image-container">
+                <img src="./static/images/logo/teleai.png">
+                <img src="./static/images/logo/ustc.png">
+                <img src="./static/images/logo/Tsinghua.png">
+              
+                <img src="./static/images/logo/Hong_Kong_University_of_Science_and_Technology.png" class="small-img">
+              </div>
+
               <div class="column has-text-centered">
                 <div class="publication-links">
                   <!-- PDF Link. -->
@@ -130,15 +160,15 @@
                         </a>
                       </span>
 
-                  <!-- <span class="link-block">
-                    <a target="_blank" href="about:blank"
+                  <span class="link-block">
+                    <a target="_blank" href="https://TODO/"
                        class="external-link button is-normal is-rounded is-dark">
                       <span class="icon">
                           <i class="fab fa-twitter"></i>
                       </span>
                       <span>Twitter</span>
                     </a>
-                  </span> -->
+                  </span>
                 </div>
     
               </div>
@@ -262,6 +292,47 @@
                     We also implement our test-time scaling approach in the autoregressive-based VLA, OpenVLA, achieving an average improvement of 6.0% in success rate on LIBERO. 
                     Across extensive simulation experiments and multiple VLAs with different architectures, our method consistently yields substantial improvements over the base policy.
                   </p>
+
+                  <p style="text-align: justify; font-size: 18px; margin-top: 15px; padding-left: 10px;">
+                    Evaluation of success rate(%) on the RoboTwin 1.0.
+                  </p>
+                  <div class="columns is-centered">
+                    <img src="./static/images/sim/robotwin1.png" width="90%">
+                  </div>
+
+                  <p style="text-align: justify; font-size: 18px; margin-top: 15px; padding-left: 10px;">
+                    Success rate (%) evaluated on Simpler-WindowX. 
+                    Baseline results are taken from Simpler, RoboVLM, and SpatialVLA. 
+                    Our method achieves an average improvement of 7.5% over $\pi_0$.
+                  </p>
+                  <div class="columns is-centered">
+                    <img src="./static/images/sim/simpler.png" width="75%">
+                  </div>
+
+                  <p style="text-align: justify; font-size: 18px; margin-top: 15px; padding-left: 10px;">
+                    Evaluation on the Robotwin2.0 benchmark. 
+                    Each task is tested across 100 randomly generated scenes using 100 different seeds. 
+                    For test-time scaling, the number of candidate actions is set to 50.
+                  </p>
+                  <div class="columns is-centered">
+                    <img src="./static/images/sim/robotwin2.png" width="100%">
+                  </div>
+
+                  <p style="text-align: justify; font-size: 18px; margin-top: 15px; padding-left: 10px;">
+                    Evaluation on the Libero-long benchmark. Our method, TACO, 
+                    is applied to both Pi0.5 and OpenVLA. 
+                    For the autoregressive VLA architecture, we set $temperature=1$ for action sampling. 
+                    Results marked with $\mathbf{*}$ are directly reported from Robomonkey. 
+                    OpenVLA (reproduced) denotes our own reproduction results, 
+                    which serves as the baseline for our TACO implementation. 
+                    We observe that TACO can be effectively applied to autoregressive VLA and consistently improves performance.
+                  </p>
+                  <div class="columns is-centered">
+                    <img src="./static/images/sim/libero.png" width="90%">
+                  </div>
+
+
+
                 </div>
               </div>
             </div>
@@ -440,7 +511,7 @@
     <!-- Safety Visualization Results -->
     <section class="section body">
       <div class="container">
-        <h2 class="title is-3" style="text-align: center; padding-bottom: 10px;">The Hidden Advantage of ATE: Safer and Smoother Manipulation</h2>
+        <h2 class="title is-3" style="text-align: center; padding-bottom: 10px;">A comparison of key moments while grasping a marker</h2>
         <div class="columns is-centered">
 
           <div class="column is-half">
@@ -506,7 +577,6 @@
           @article{TACO,
             title={Steering Vision-Language-Action Models as Anti-Exploration: A Test-Time Scaling Approach },
             author={Siyuan Yang, Yang Zhang, Haoran He, Ling Pan, Xiu Li, Chenjia Bai, Xuelong Li},
-            journal={TODO},
             year={2025}
           }
         </pre>
