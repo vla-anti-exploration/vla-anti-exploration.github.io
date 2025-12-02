@@ -293,15 +293,18 @@
                     Across extensive simulation experiments and multiple VLAs with different architectures, our method consistently yields substantial improvements over the base policy.
                   </p>
 
-                  <p style="text-align: justify; font-size: 18px; margin-top: 15px; padding-left: 10px;">
+                  <!-- <p style="text-align: justify; font-size: 18px; margin-top: 15px; padding-left: 10px;">
                     Evaluation of success rate(%) on the RoboTwin 1.0.
+                  </p> -->
+                  <br><p style="text-align: center;font-size: 18px">
+                    <strong>Evaluation of success rate(%) on the RoboTwin 1.0</strong>.
                   </p>
                   <div class="columns is-centered">
                     <img src="./static/images/sim/robotwin1.png" width="90%">
                   </div>
 
-                  <p style="text-align: justify; font-size: 18px; margin-top: 15px; padding-left: 10px;">
-                    Success rate (%) evaluated on Simpler-WindowX. 
+                  <br><p style="text-align: justify; font-size: 18px; margin-top: 15px; padding-left: 10px;">
+                    <strong>Evaluation of success rate(%) on Simpler-WindowX</strong>. 
                     Baseline results are taken from Simpler, RoboVLM, and SpatialVLA. 
                     Our method achieves an average improvement of 7.5% over $\pi_0$.
                   </p>
@@ -309,8 +312,8 @@
                     <img src="./static/images/sim/simpler.png" width="75%">
                   </div>
 
-                  <p style="text-align: justify; font-size: 18px; margin-top: 15px; padding-left: 10px;">
-                    Evaluation on the Robotwin2.0 benchmark. 
+                  <br><p style="text-align: justify; font-size: 18px; margin-top: 15px; padding-left: 10px;">
+                    <strong>Evaluation of success rate(%) on the Robotwin2.0</strong> benchmark. 
                     Each task is tested across 100 randomly generated scenes using 100 different seeds. 
                     For test-time scaling, the number of candidate actions is set to 50.
                   </p>
@@ -318,10 +321,10 @@
                     <img src="./static/images/sim/robotwin2.png" width="100%">
                   </div>
 
-                  <p style="text-align: justify; font-size: 18px; margin-top: 15px; padding-left: 10px;">
-                    Evaluation on the Libero-long benchmark. Our method, TACO, 
+                  <br><p style="text-align: justify; font-size: 18px; margin-top: 15px; padding-left: 10px;">
+                    <strong>Evaluation of success rate(%) on Libero-long</strong> benchmark. Our method, TACO, 
                     is applied to both Pi0.5 and OpenVLA. 
-                    For the autoregressive VLA architecture, we set $temperature=1$ for action sampling. 
+                    For the autoregressive VLA architecture, we set $\text{temperature}=1$ for action sampling. 
                     Results marked with $\mathbf{*}$ are directly reported from Robomonkey. 
                     OpenVLA (reproduced) denotes our own reproduction results, 
                     which serves as the baseline for our TACO implementation. 
@@ -330,8 +333,6 @@
                   <div class="columns is-centered">
                     <img src="./static/images/sim/libero.png" width="90%">
                   </div>
-
-
 
                 </div>
               </div>
