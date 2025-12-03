@@ -2,9 +2,41 @@
 <html>
   <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TACO: Steering Vision-Language-Action Models as Anti-Exploration</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+    <!-- CSS Libraries -->
+    <link rel="stylesheet" href="./static/css/bulma.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="./static/css/index.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+    <!-- Math Rendering -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script>
+    <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="./static/images/taco_good.png">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:image:width" content="1600" />
+    <meta property="og:image:height" content="900" />
+
+    <!-- JavaScript Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="./static/js/fontawesome.all.min.js"></script>
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-slider.min.js"></script>
+    <script src="./static/js/index.js"></script>
+
     <script>
       document.addEventListener("DOMContentLoaded", function() {
         renderMathInElement(document.body, {
@@ -17,164 +49,212 @@
     </script>
 
     <style>
+      /* Logo Container */
       .image-container {
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 20px; /* 两张图片之间的间距 */
-        margin-top: 10px;
+        gap: 30px;
+        margin: 30px auto 20px;
+        padding: 20px;
+        flex-wrap: wrap;
       }
+      
       .image-container img {
-        max-width: 10%;   /* 最大宽度限制 */
-        max-height: 120px;   /* 最大高度限制 */
+        max-width: 100px;
+        max-height: 100px;
         width: auto;
         height: auto;
-        border: 2px solid #ffffff;
-        border-radius: 10px;
+        filter: grayscale(20%);
+        transition: all 0.3s ease;
+        object-fit: contain;
+      }
+      
+      .image-container img:hover {
+        filter: grayscale(0%);
+        transform: scale(1.05);
       }
 
+      /* Better spacing */
+      .publication-title {
+        margin-bottom: 1.5rem !important;
+        line-height: 1.3 !important;
+      }
+
+      .publication-authors {
+        line-height: 1.8 !important;
+        margin-bottom: 1rem !important;
+      }
+
+      /* Section spacing */
+      .section {
+        padding: 3rem 1.5rem;
+      }
+
+      /* Better button styling */
+      .publication-links .button {
+        margin: 0.3rem;
+      }
+
+      /* Video comparison styling */
+      .video-comparison {
+        margin: 20px 0;
+      }
+
+      /* Table styling for results */
+      .results-table {
+        margin: 30px auto;
+        max-width: 95%;
+      }
+
+      /* Card improvements */
+      .card {
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+      }
+
+      /* Better title styling */
+      h2.title, h3.title, h5 {
+        color: #363636;
+        font-weight: 600;
+      }
+
+      /* Abstract section */
+      .hero.is-light {
+        background: linear-gradient(to bottom, #ffffff 0%, #f8f9fa 100%);
+      }
+
+      /* Hero section with clean light gradient */
+      .hero:not(.is-light) {
+        background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+        color: #2c3e50;
+      }
+
+      .hero:not(.is-light) .title,
+      .hero:not(.is-light) .publication-authors {
+        color: #2c3e50 !important;
+      }
+
+      .hero:not(.is-light) .publication-authors a {
+        color: #2c3e50 !important;
+      }
+
+      /* Smooth color transitions between sections */
+      .section {
+        background: #ffffff;
+      }
+
+      /* Responsive adjustments */
+      @media screen and (max-width: 768px) {
+        .image-container {
+          gap: 15px;
+        }
+        
+        .image-container img {
+          max-width: 80px;
+          max-height: 80px;
+        }
+
+        .publication-title {
+          font-size: 1.5rem !important;
+        }
+      }
     </style>
-
   </head>
-  <head>
-    <title>
-      Steering Vision-Language-Action Models as Anti-Exploration: A Test-Time Scaling Approach  
-    </title>
-
-  <!-- <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-        rel="stylesheet"> -->
-
-  <!-- <link rel="stylesheet" href="./static/css/bulma.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
-  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  <link rel="stylesheet" href="./static/css/index.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script defer src="./static/js/fontawesome.all.min.js"></script>
-  <script src="./static/js/bulma-carousel.min.js"></script>
-  <script src="./static/js/bulma-slider.min.js"></script>
-  <script src="./static/js/index.js"></script> -->
-
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-        rel="stylesheet">
-
-  <link rel="stylesheet" href="./static/css/bulma.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
-  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  <link rel="stylesheet" href="./static/css/index.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script defer src="./static/js/fontawesome.all.min.js"></script>
-  <script src="./static/js/bulma-carousel.min.js"></script>
-  <script src="./static/js/bulma-slider.min.js"></script>
-  <script src="./static/js/index.js"></script>
-
-  <link rel="icon" href="./static/images/taco_good.png">
-
-
-  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  <meta property="og:image:width" content="1600" />
-  <meta property="og:image:height" content="900" />
-
-</head>
 
   <body>
+    <!-- Title and Authors Section -->
     <section class="hero">
-      <div class="hero-body no-bottom-padding">
-        <div class="container">
+      <div class="hero-body" style="padding: 3rem 1.5rem;">
+        <div class="container is-max-desktop">
           <div class="columns is-centered">
-            <div class="column has-text-centered">
-              <h1 class="title is-1 publication-title">
-                <img src="./static/images/taco_good.png" style="width:60px; vertical-align:middle; margin-right:6px;">
-                Steering Vision-Language-Action Models as Anti-Exploration: A Test-Time Scaling Approach  
+            <div class="column is-full-width has-text-centered">
+              
+              <!-- Title -->
+              <h1 class="title is-1 publication-title" style="margin-bottom: 2rem;">
+                <img src="./static/images/taco_good.png" style="width:70px; vertical-align:middle; margin-right:10px;">
+                Steering Vision-Language-Action Models<br>as Anti-Exploration: A Test-Time Scaling Approach
               </h1>
-              <div class="is-size-5 publication-authors">
+
+              <!-- Authors -->
+              <div class="is-size-5 publication-authors" style="margin-bottom: 1.5rem;">
                 <span class="author-block">
-                  <a>Siyuan Yang</a><sup>1,2,*</sup>&nbsp;&nbsp;&nbsp;
-                  <a>Yang Zhang</a><sup>1,3,*,‡</sup>&nbsp;&nbsp;&nbsp;
-                  <a>Haoran He</a><sup>4</sup>&nbsp;&nbsp;&nbsp;
-                  <a>Ling Pan</a><sup>4</sup>&nbsp;&nbsp;&nbsp;
-                  <a>Xiu Li</a><sup>3</sup>&nbsp;&nbsp;&nbsp;
-                  <a target="_blank" href="https://baichenjia.github.io/">Chenjia Bai</a><sup>1,†</sup>&nbsp;&nbsp;&nbsp;
-                  <a>Xuelong Li</a><sup>1,†</sup>&nbsp;&nbsp;&nbsp;
-                  <br /><sup>1</sup>Institute of Artificial Intelligence, China Telecom&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<sup>2</sup>University of Science and Technology of China
-                  <br /><sup>3</sup>Tsinghua University&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<sup>4</sup>The Hong Kong University of Science and Technology
-                  <br> <sup>*</sup>Equal contributions &nbsp;&nbsp;&nbsp;<sup>†</sup>Corresponding authors &nbsp;&nbsp;&nbsp;<sup>‡</sup>Project Leader
+                  <a style="color: #2c3e50;">Siyuan Yang</a><sup>1,2,*</sup>&nbsp;&nbsp;
+                  <a target="_blank" href="https://github.com/breez3young" style="color: #2c3e50; text-decoration: underline;">Yang Zhang</a><sup>1,3,*,‡</sup>&nbsp;&nbsp;
+                  <a target="_blank" href="https://tinnerhrhe.github.io/" style="color: #2c3e50; text-decoration: underline;">Haoran He</a><sup>4</sup>&nbsp;&nbsp;
+                  <a target="_blank" href="https://ling-pan.github.io/" style="color: #2c3e50; text-decoration: underline;">Ling Pan</a><sup>4</sup>&nbsp;&nbsp;
+                  <a style="color: #2c3e50;">Xiu Li</a><sup>3</sup>&nbsp;&nbsp;
+                  <a target="_blank" href="https://baichenjia.github.io/" style="color: #2c3e50; text-decoration: underline;">Chenjia Bai</a><sup>1,†</sup>&nbsp;&nbsp;
+                  <a style="color: #2c3e50;">Xuelong Li</a><sup>1,†</sup>
                 </span>
               </div>
 
-              <!-- Logos row -->
+              <!-- Affiliations -->
+              <div class="is-size-6" style="color: #5a6c7d; line-height: 1.8; margin-bottom: 1rem;">
+                <sup>1</sup>Institute of Artificial Intelligence, China Telecom&nbsp;&nbsp;&nbsp;&nbsp;
+                <sup>2</sup>University of Science and Technology of China<br>
+                <sup>3</sup>Tsinghua University&nbsp;&nbsp;&nbsp;&nbsp;
+                <sup>4</sup>The Hong Kong University of Science and Technology<br>
+                <span style="font-size: 0.9rem;">
+                  <sup>*</sup>Equal contributions&nbsp;&nbsp;&nbsp;
+                  <sup>†</sup>Corresponding authors&nbsp;&nbsp;&nbsp;
+                  <sup>‡</sup>Project Leader
+                </span>
+              </div>
+
+              <!-- Logos -->
               <div class="image-container">
-                <img src="./static/images/logo/teleai.png">
-                <img src="./static/images/logo/ustc.png">
-                <img src="./static/images/logo/Tsinghua.png">
-              
-                <img src="./static/images/logo/Hong_Kong_University_of_Science_and_Technology.png" class="small-img">
+                <img src="./static/images/logo/teleai.png" alt="China Telecom AI">
+                <img src="./static/images/logo/ustc.png" alt="USTC">
+                <img src="./static/images/logo/Tsinghua.png" alt="Tsinghua University">
+                <img src="./static/images/logo/Hong_Kong_University_of_Science_and_Technology.png" alt="HKUST">
               </div>
 
-              <div class="column has-text-centered">
-                <div class="publication-links">
-                  <!-- PDF Link. -->
-                  <!-- <span class="link-block">
-                    <a href="https://arxiv.org/abs/2406.00439"
-                       class="external-link button is-normal is-rounded is-dark">
-                      <span class="icon">
-                          <i class="fas fa-file-pdf"></i>
-                      </span>
-                      <span>Paper</span>
-                    </a>
-                  </span> -->
-  
-                  <!-- arXiv Link. -->
-                  <span class="link-block">
-                    <a target="_blank" href="https://arxiv.org/abs/2512.02834"
-                       class="external-link button is-normal is-rounded is-dark">
-                      <span class="icon">
-                          <i class="ai ai-arxiv"></i>
-                      </span>
-                      <span>ArXiv</span>
-                    </a>
-                  </span>
-                  <span class="link-block">
-                    <a href="https://github.com/breez3young/TACO"
-                       class="external-link button is-normal is-rounded is-dark">
-                      <span class="icon">
-                          <i class="fab fa-github"></i>
-                      </span>
-                      <span>Code</span>
-                      </a>
+              <!-- Links -->
+              <div class="publication-links" style="margin-top: 1.5rem;">
+                <span class="link-block">
+                  <a target="_blank" href="https://arxiv.org/abs/2512.02834"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="ai ai-arxiv"></i>
                     </span>
-                    <!-- Dataset Link. -->
-                    <span class="link-block">
-                      <a href="https://huggingface.co/collections/rhodes-team-teleai/vla-tts-taco"
-                         class="external-link button is-normal is-rounded is-dark">
-                        <span class="icon">
-                            <img src="static/images/huggingface.svg" />
-                        </span>
-                        <span>Models</span>
-                        </a>
-                      </span>
+                    <span>ArXiv</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="https://github.com/breez3young/TACO"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="https://huggingface.co/collections/rhodes-team-teleai/vla-tts-taco"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <img src="static/images/huggingface.svg" style="height: 1em;" />
+                    </span>
+                    <span>Models</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a target="_blank" href="https://x.com/yang_zhang_/status/1996122796309831747"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="fab fa-twitter"></i>
+                    </span>
+                    <span>Twitter</span>
+                  </a>
+                </span>
+              </div>
 
-                  <span class="link-block">
-                    <a target="_blank" href="https://TODO/"
-                       class="external-link button is-normal is-rounded is-dark">
-                      <span class="icon">
-                          <i class="fab fa-twitter"></i>
-                      </span>
-                      <span>Twitter</span>
-                    </a>
-                  </span>
-                </div>
-    
-              </div>
-              </div>
-    
-              </div>
             </div>
           </div>
         </div>
@@ -204,139 +284,127 @@
 
     <!-- Abstract -->
     <section class="hero is-light is-small">
-      <div class="hero-body">
-        <div class="container is-two-thirds">
-          <div class="columns is-centered has-text-centered">
-            <div class="column is-two-thirds">
-              <h2 class="title is-3">Abstract</h2>
-            </div>
-        </div>
-      
-        <div class="columns is-centered has-text-centered">
-          <div class="column is-two-thirds ">
-            <div class="content has-text-justified">
-              Vision-Language-Action (VLA) models, trained via flow-matching or diffusion objectives, excel at learning complex behaviors from large-scale, multi-modal datasets (e.g. human teleoperation, scripted policies).
-              However, since VLAs incorporate diverse data modes in the pre-training stage, and the finetuning dataset often contains demonstration data collected in a kinematically suboptimal or undesirable way, it exists redundant action modes that are irrelevant to the success action modes of the downstream task. Specifically, we observe a critical inference-time fragility among various sampled noises after supervised finetuning of pre-trained VLAs.
-              In this paper, we attribute this instability to the distribution shift between the VLA policy and the policy induced by stable success modes of the downstream task dataset.
-              Thus, we propose <strong>TACO</strong>, a test-time-scaling (TTS) framework that applies a lightweight pseudo-count estimator as a high-fidelity verifier of action chunks. The VLA models integrated with TACO can execute the actions with maximum pseudo-count from all sampled action chunks, thereby preventing distribution shifts while preserving the generalization ability of VLAs since the constraint is applied only during inference. Our method resembles the classical anti-exploration principle in offline reinforcement learning (RL), and being gradient-free, it incurs significant computational benefits compared to RL update, especially for flow or diffusion-based VLAs which are difficult to perform RL update due to denoising process. Extensive experiments across four simulation benchmarks (RoboTwin2.0, Robotwin, LIBERO, SimplerEnv) and a dual-arm platform demonstrate that our method significantly improves the inference stability and success rates in downstream-task adaptations.             </div>
-          </div>
-          </div>
-        </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Two-stages Method  -->
-    <section class="section body">
-      <div class="container">
-        <div class="columns is-centered">
-          <div class="column is-full-width">
-            <h2 class="title is-3" style="text-align: center; padding-bottom: 10px;">Coupled Pseudo-Count Estimation for VLAs & Test-Time Scaling as Anti-Exploration</h2>
-            <!-- <h2 class="subtitle is-4" style="text-align: center;">Defining Visual Affordances</h2> -->
-            <div class="columns is-centered has-text-centered">
-            <div class="column is-four-fifths ">
-            <div class="content has-text-justified">
-              
-              <tr>
-                <td>
-                  <div class="col">
-                    <div class="row">
-                      <img src="./static/images/overview_v4.jpg" alt="method overview" width="95%">
-                    </div>
-                  </div>
-                  <div class="columns is-centered">
-                    <div class="column">
-                          <p style="text-align: justify;font-size: 18px">
-                            We now present <strong>TACO</strong>, a framework that treats the pseudo count estimator as an off-the-shelf verifier to scale test-time compute for VLAs, implementing Anti-Exploration principle.
-                            Note that TACO can be directly integrated into VLAs that either use discrete token auto-regression (e.g., OpenVLA) or a score-based generative formulation (e.g., RDT, $\pi_0$, $\pi_{0.5}$) to model the action distribution.
-                            In the training stage (Stage 1), we sample data from the SFT dataset, add a certain amount of noise to the expert actions, and feed them into the VLA to denoise the actions while extracting internal representations. 
-                            These representations are then used to train the CFN. 
-                            During inference (Stage 2), the VLA generates multiple candidate actions along with their corresponding internal representations, and the CFN serves as a selector to select the action with the highest count for execution.                        
-                          </p>
-                  </div>
-                </div>
-                </td>
-              </tr>
-            </div>
-            </div>
+      <div class="hero-body" style="padding: 3rem 1.5rem;">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column is-four-fifths">
+              <h2 class="title is-3 has-text-centered" style="margin-bottom: 2rem;">Abstract</h2>
+              <div class="content has-text-justified" style="font-size: 1.1rem; line-height: 1.8;">
+                <p>
+                  Vision-Language-Action (VLA) models, trained via flow-matching or diffusion objectives, excel at learning complex behaviors from large-scale, multi-modal datasets (e.g. human teleoperation, scripted policies).
+                  However, since VLAs incorporate diverse data modes in the pre-training stage, and the finetuning dataset often contains demonstration data collected in a kinematically suboptimal or undesirable way, it exists redundant action modes that are irrelevant to the success action modes of the downstream task.
+                </p>
+                <p>
+                  Specifically, we observe a critical inference-time fragility among various sampled noises after supervised finetuning of pre-trained VLAs.
+                  In this paper, we attribute this instability to the distribution shift between the VLA policy and the policy induced by stable success modes of the downstream task dataset.
+                </p>
+                <p>
+                  Thus, we propose <strong>TACO</strong>, a test-time-scaling (TTS) framework that applies a lightweight pseudo-count estimator as a high-fidelity verifier of action chunks. The VLA models integrated with TACO can execute the actions with maximum pseudo-count from all sampled action chunks, thereby preventing distribution shifts while preserving the generalization ability of VLAs since the constraint is applied only during inference.
+                </p>
+                <p>
+                  Our method resembles the classical anti-exploration principle in offline reinforcement learning (RL), and being gradient-free, it incurs significant computational benefits compared to RL update, especially for flow or diffusion-based VLAs which are difficult to perform RL update due to denoising process. Extensive experiments across four simulation benchmarks (RoboTwin2.0, Robotwin, LIBERO, SimplerEnv) and a dual-arm platform demonstrate that our method significantly improves the inference stability and success rates in downstream-task adaptations.
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-
-    <!-- Simulation Experiment Results -->
-    <section class="section body">
-      <div class="container">
+    <!-- Method Overview -->
+    <section class="section">
+      <div class="container is-max-desktop">
         <div class="columns is-centered">
           <div class="column is-full-width">
-            <h2 class="title is-3" style="text-align: center; padding-bottom: 10px;">
-              Simulation Results
+            <h2 class="title is-3 has-text-centered" style="margin-bottom: 2rem;">
+              Coupled Pseudo-Count Estimation for VLAs<br>& Test-Time Scaling as Anti-Exploration
             </h2>
-            <div class="columns is-centered has-text-centered">
-              <div class="column is-four-fifths">
-                <div class="content has-text-justified">
-                  <div class="columns is-centered">
-                    <img src="./static/images/benchs.jpg" alt="method overview" width="95%">
-                    <!-- <div class="column is-half">
-                      <img src="./static/images/pi0_top8_horizontal.svg" alt="RoboTwin $\pi_0$ Results" width="100%">
-                    </div>
-                    <div class="column is-half">
-                      <img src="./static/images/rdt_top8_horizontal.svg" alt="RoboTwin RDT Results" width="100%">
-                    </div> -->
-                  </div>
-                  <p style="text-align: justify; font-size: 18px; margin-top: 15px; padding-left: 10px;">
-                    Our method demonstrates strong performance in simulation. 
-                    For flow-matching–based VLAs, it improves the success rate of π₀ by 9.1% and 7.5% in Robotwin 1.0 and Simpler, respectively; and improves the success rate of π₀.₅ by 4.7% and 1.8% in Robotwin 2.0 and LIBERO, respectively. 
-                    We also implement our test-time scaling approach in the autoregressive-based VLA, OpenVLA, achieving an average improvement of 6.0% in success rate on LIBERO. 
-                    Across extensive simulation experiments and multiple VLAs with different architectures, our method consistently yields substantial improvements over the base policy.
-                  </p>
-
-                  <!-- <p style="text-align: justify; font-size: 18px; margin-top: 15px; padding-left: 10px;">
-                    Evaluation of success rate(%) on the RoboTwin 1.0.
-                  </p> -->
-                  <br><p style="text-align: center;font-size: 18px">
-                    <strong>Evaluation of success rate(%) on the RoboTwin 1.0</strong>.
-                  </p>
-                  <div class="columns is-centered">
-                    <img src="./static/images/sim/robotwin1.png" width="90%">
-                  </div>
-
-                  <br><p style="text-align: justify; font-size: 18px; margin-top: 15px; padding-left: 10px;">
-                    <strong>Evaluation of success rate(%) on Simpler-WindowX</strong>. 
-                    Baseline results are taken from Simpler, RoboVLM, and SpatialVLA. 
-                    Our method achieves an average improvement of 7.5% over $\pi_0$.
-                  </p>
-                  <div class="columns is-centered">
-                    <img src="./static/images/sim/simpler.png" width="75%">
-                  </div>
-
-                  <br><p style="text-align: justify; font-size: 18px; margin-top: 15px; padding-left: 10px;">
-                    <strong>Evaluation of success rate(%) on the Robotwin2.0</strong> benchmark. 
-                    Each task is tested across 100 randomly generated scenes using 100 different seeds. 
-                    For test-time scaling, the number of candidate actions is set to 50.
-                  </p>
-                  <div class="columns is-centered">
-                    <img src="./static/images/sim/robotwin2.png" width="100%">
-                  </div>
-
-                  <br><p style="text-align: justify; font-size: 18px; margin-top: 15px; padding-left: 10px;">
-                    <strong>Evaluation of success rate(%) on Libero-long</strong> benchmark. Our method, TACO, 
-                    is applied to both Pi0.5 and OpenVLA. 
-                    For the autoregressive VLA architecture, we set $\text{temperature}=1$ for action sampling. 
-                    Results marked with $\mathbf{*}$ are directly reported from Robomonkey. 
-                    OpenVLA (reproduced) denotes our own reproduction results, 
-                    which serves as the baseline for our TACO implementation. 
-                    We observe that TACO can be effectively applied to autoregressive VLA and consistently improves performance.
-                  </p>
-                  <div class="columns is-centered">
-                    <img src="./static/images/sim/libero.png" width="90%">
-                  </div>
-
-                </div>
+            
+            <div class="content has-text-justified">
+              <div style="text-align: center; margin-bottom: 2rem;">
+                <img src="./static/images/overview_v4.jpg" alt="TACO Method Overview" style="width: 100%; max-width: 1000px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
               </div>
+              
+              <p style="font-size: 1.1rem; line-height: 1.8; padding: 0 2rem;">
+                We now present <strong>TACO</strong>, a framework that treats the pseudo count estimator as an off-the-shelf verifier to scale test-time compute for VLAs, implementing Anti-Exploration principle.
+                Note that TACO can be directly integrated into VLAs that either use discrete token auto-regression (e.g., OpenVLA) or a score-based generative formulation (e.g., RDT, $\pi_0$, $\pi_{0.5}$) to model the action distribution.
+              </p>
+              
+              <p style="font-size: 1.1rem; line-height: 1.8; padding: 0 2rem;">
+                In the training stage (Stage 1), we sample data from the SFT dataset, add a certain amount of noise to the expert actions, and feed them into the VLA to denoise the actions while extracting internal representations. 
+                These representations are then used to train the CFN. 
+                During inference (Stage 2), the VLA generates multiple candidate actions along with their corresponding internal representations, and the CFN serves as a selector to select the action with the highest count for execution.
+              </p>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Simulation Results -->
+    <section class="section" style="background: linear-gradient(to bottom, #fafbfc 0%, #f5f7f9 100%);">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered" style="margin-bottom: 2rem;">Simulation Results</h2>
+        
+        <div class="content has-text-justified">
+          <!-- Overview Image -->
+          <div style="text-align: center; margin-bottom: 2rem;">
+            <img src="./static/images/benchs.jpg" alt="Benchmarks Overview" style="width: 100%; max-width: 1000px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+          </div>
+          
+          <p style="font-size: 1.1rem; line-height: 1.8; padding: 0 1rem; margin-bottom: 3rem;">
+            Our method demonstrates strong performance in simulation. 
+            For flow-matching–based VLAs, it improves the success rate of π₀ by 9.1% and 7.5% in Robotwin 1.0 and Simpler, respectively; and improves the success rate of π₀.₅ by 4.7% and 1.8% in Robotwin 2.0 and LIBERO, respectively. 
+            We also implement our test-time scaling approach in the autoregressive-based VLA, OpenVLA, achieving an average improvement of 6.0% in success rate on LIBERO. 
+            Across extensive simulation experiments and multiple VLAs with different architectures, our method consistently yields substantial improvements over the base policy.
+          </p>
+
+          <!-- RoboTwin 1.0 Results -->
+          <h3 class="title is-4 has-text-centered" style="margin-top: 3rem; margin-bottom: 1.5rem;">
+            RoboTwin 1.0 Results
+          </h3>
+          <div style="text-align: center; margin-bottom: 3rem;">
+            <img src="./static/images/sim/robotwin1.png" alt="RoboTwin 1.0 Results" style="width: 95%; max-width: 900px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+          </div>
+
+          <!-- Simpler Results -->
+          <h3 class="title is-4 has-text-centered" style="margin-top: 3rem; margin-bottom: 1rem;">
+            Simpler-WindowX Results
+          </h3>
+          <p style="font-size: 1rem; line-height: 1.6; padding: 0 1rem; margin-bottom: 1.5rem;">
+            Baseline results are taken from Simpler, RoboVLM, and SpatialVLA. 
+            Our method achieves an average improvement of 7.5% over $\pi_0$.
+          </p>
+          <div style="text-align: center; margin-bottom: 3rem;">
+            <img src="./static/images/sim/simpler.png" alt="Simpler Results" style="width: 80%; max-width: 700px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+          </div>
+
+          <!-- RoboTwin 2.0 Results -->
+          <h3 class="title is-4 has-text-centered" style="margin-top: 3rem; margin-bottom: 1rem;">
+            RoboTwin 2.0 Results
+          </h3>
+          <p style="font-size: 1rem; line-height: 1.6; padding: 0 1rem; margin-bottom: 1.5rem;">
+            Each task is tested across 100 randomly generated scenes using 100 different seeds. 
+            For test-time scaling, the number of candidate actions is set to 50.
+          </p>
+          <div style="text-align: center; margin-bottom: 3rem;">
+            <img src="./static/images/sim/robotwin2.png" alt="RoboTwin 2.0 Results" style="width: 100%; max-width: 1000px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+          </div>
+
+          <!-- LIBERO Results -->
+          <h3 class="title is-4 has-text-centered" style="margin-top: 3rem; margin-bottom: 1rem;">
+            LIBERO-Long Results
+          </h3>
+          <p style="font-size: 1rem; line-height: 1.6; padding: 0 1rem; margin-bottom: 1.5rem;">
+            Our method, TACO, is applied to both Pi0.5 and OpenVLA. 
+            For the autoregressive VLA architecture, we set $\text{temperature}=1$ for action sampling. 
+            Results marked with $\mathbf{*}$ are directly reported from Robomonkey. 
+            OpenVLA (reproduced) denotes our own reproduction results, which serves as the baseline for our TACO implementation. 
+            We observe that TACO can be effectively applied to autoregressive VLA and consistently improves performance.
+          </p>
+          <div style="text-align: center; margin-bottom: 2rem;">
+            <img src="./static/images/sim/libero.png" alt="LIBERO Results" style="width: 95%; max-width: 900px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
           </div>
         </div>
       </div>
@@ -345,161 +413,112 @@
     
     
 
-    <section class="section body">
-      <div class="container">
-        <div class="columns is-centered">
-          <div class="column is-full-width">
-            <h2 class="title is-3" style="text-align: center; padding-bottom: 10px;">Real-world Results: Dual Realman RM75 Robot Arm</h2>
-            <div class="columns is-centered has-text-centered">
-            <div class="column is-four-fifths ">
-              <div class="content has-text-justified">
-                <!-- <p style="text-align: justify; font-size: 18px">
-                  $\pi_0$ + <span style="font-family: monospace;">ATE</span> excels at long-horizon manipulation tasks, precise pick-and-place operations, and complex tool-use scenarios, demonstrating reliable performance across both single-arm and dual-arm tasks.
-                  Below are videos of $\pi_0$ + <span style="font-family: monospace;">ATE</span> and $\pi_0$ on physical Realman robot manipulation tasks with different manipulation skills and objects. (Videos are sped up by <strong>3x</strong>.)
-                </p> -->
-              </div>
-                <div class="columns is-vcentered interpolation-panel">
-                <div class="column  has-text-centered">
-                  <h5>Laptop</h5>
-                  <!-- <p style="font-size: 15px; color: #2a2727; margin: 2px 10%; line-height: 1.2;">
-                    (Dual-arm Handover Task)
-                  </p> -->
-                  <div style="width: 49%; display: inline-block;">
-                    <video autoplay controls muted loop playsinline width="100%">
-                        <source src="./static/video/base/Laptop-Pi0+TACO-suc.mp4" type="video/mp4">
-                    </video>
-                    <div style="text-align: center; margin-top: 5px;">
-                      $\pi_0$+TACO
-                    </div>
-                </div>
-                <div style="width: 49%; display: inline-block;">
-                  <video autoplay controls muted loop playsinline width="100%">
-                      <source src="./static/video/base/Laptop-Pi0-fail.mp4" type="video/mp4">
-                  </video>
-                  <div style="text-align: center; margin-top: 5px;">
-                      $\pi_0$
-                  </div>
-                </div>
-
-                </div>
-                <div class="column  has-text-centered">
-                  <h5>Paper and Pen</h5>
-                  <!-- <p style="font-size: 15px; color: #2a2727; margin: 2px 10%; line-height: 1.2;">
-                    (Dual-arm Coordination Task)
-                  </p> -->
-                  <div style="width: 49%; display: inline-block;">
-                    <video autoplay controls muted loop playsinline width="100%">
-                      <source src="./static/video/base/Paper_and_Pen-Pi0+TACO-suc.mp4" type="video/mp4">
-                    </video>
-                    <div style="text-align: center; margin-top: 5px;">
-                      $\pi_0$+TACO
-                    </div>
-                  </div>
-                  <div style="width: 49%; display: inline-block;">
-                    <video autoplay controls muted loop playsinline width="100%">
-                      <source src="./static/video/base/Paper_and_Pen-Pi0-fail.mp4" type="video/mp4">
-                    </video>
-                    <div style="text-align: center; margin-top: 5px;">
-                      $\pi_0$
-                    </div>
-                  </div>
-                </div>
-              </div>
-  
-              <div class="columns is-vcentered interpolation-panel">
-                <div class="column  has-text-centered">
-                  <h5>Receive Book</h5>
-                  <!-- <p style="font-size: 15px; color: #2a2727; margin: 2px 10%; line-height: 1.2;">
-                    (Single-arm Precise Task)
-                  </p> -->
-                  <div style="width: 49%; display: inline-block;">
-                    <video autoplay controls muted loop playsinline width="100%">
-                        <source src="./static/video/base/Receive_Book-Pi0+TACO-suc.mp4" type="video/mp4">
-                    </video>
-                    <div style="text-align: center; margin-top: 5px;">
-                        $\pi_0$+TACO
-                    </div>
-                </div>
-                <div style="width: 49%; display: inline-block;">
-                  <video autoplay controls muted loop playsinline width="100%">
-                      <source src="./static/video/base/Receive_Book-Pi0-fail.mp4" type="video/mp4">
-                  </video>
-                  <div style="text-align: center; margin-top: 5px;">
-                      $\pi_0$
-                  </div>
-                </div>
-
-                </div>
-                <div class="column  has-text-centered">
-                  <h5>Storage Charger</h5>
-                  <!-- <p style="font-size: 15px; color: #2a2727; margin: 2px 10%; line-height: 1.2;">
-                    (Tool-use Task)
-                  </p> -->
-                  <div style="width: 49%; display: inline-block;">
-                    <video autoplay controls muted loop playsinline width="100%">
-                      <source src="./static/video/base/Storage_Charger -Pi0+TACO-suc.mp4" type="video/mp4">
-                    </video>
-                    <div style="text-align: center; margin-top: 5px;">
-                      $\pi_0$+TACO
-                    </div>
-                  </div>
-                  <div style="width: 49%; display: inline-block;">
-                    <video autoplay controls muted loop playsinline width="100%">
-                      <source src="./static/video/base/Storage_Charger -Pi0-fail.mp4" type="video/mp4">
-                    </video>
-                    <div style="text-align: center; margin-top: 5px;">
-                      $\pi_0$
-                    </div>
-                  </div>
-                </div>
-              </div>
-    
-              
-  
-              <!-- <div class="columns is-centered">
+    <!-- Real-world Results -->
+    <section class="section">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered" style="margin-bottom: 2rem;">
+          Real-world Results: Dual Realman RM75 Robot Arm
+        </h2>
+        
+        <div class="content">
+          <!-- Video Comparisons Grid -->
+          <div class="columns is-multiline" style="margin-bottom: 2rem;">
+            
+            <!-- Laptop Task -->
+            <div class="column is-half">
+              <h4 class="title is-5 has-text-centered" style="margin-bottom: 1rem;">Laptop</h4>
+              <div class="columns is-mobile is-gapless">
                 <div class="column">
-                  <p style="text-align: justify; font-size: 18px">We design 5 real-world robot tasks covering different manipulation skills and objects, where <strong>$\mathbf{\pi_0}$+ATE</strong> outperforms vanilla $\pi_0$, excelling in long-horizon planning, precise manipulation, dual-arm coordination, and tool-use. These tasks are categorized as follows:</p>
-              
-                  <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between;">
-                    <div style="width: 48%; border: 2px solid #BEBEBE; border-radius: 15px; padding: 10px;">
-                      <strong>Dual-arm Handover Task</strong> (<em>Make sandwich</em>, <em>Use toaster</em>)
-                    </div>
-                    <div style="width: 48%; border: 2px solid #BEBEBE; border-radius: 15px; padding: 10px;">
-                      <strong>Dual-arm Coordinated Task</strong> (<em>Cook Bun</em>)
-                    </div>
-                    <div style="width: 48%; border: 2px solid #BEBEBE; border-radius: 15px; padding: 10px;">
-                      <strong>Single-arm Precise Manipulation Task</strong> (<em>Pick Bun</em>)
-                    </div>
-                    <div style="width: 48%; border: 2px solid #BEBEBE; border-radius: 15px; padding: 10px;">
-                      <strong>Tool-use Task</strong> (<em>Make Yogurt Bowl</em>)
-                    </div>
-                  </div>
+                  <video autoplay controls muted loop playsinline width="100%" style="border-radius: 8px;">
+                    <source src="./static/video/base/Laptop-Pi0+TACO-suc.mp4" type="video/mp4">
+                  </video>
+                  <p class="has-text-centered" style="margin-top: 0.5rem; font-weight: 600; color: #48c774;">$\pi_0$ + TACO ✓</p>
                 </div>
-              </div> -->
-            </div>
+                <div class="column">
+                  <video autoplay controls muted loop playsinline width="100%" style="border-radius: 8px;">
+                    <source src="./static/video/base/Laptop-Pi0-fail.mp4" type="video/mp4">
+                  </video>
+                  <p class="has-text-centered" style="margin-top: 0.5rem; font-weight: 600; color: #f14668;">$\pi_0$ ✗</p>
+                </div>
               </div>
-                <div class="columns">
-                  <div class="column is-half">
-                    <img src="./static/images/Exp_real_world.jpg" width="90%">
-                  </div>
-                  <div class="column is-half">
-                    <img src="./static/images/time_cost.jpg" width="90%">
-                  </div>
+            </div>
+
+            <!-- Paper and Pen Task -->
+            <div class="column is-half">
+              <h4 class="title is-5 has-text-centered" style="margin-bottom: 1rem;">Paper and Pen</h4>
+              <div class="columns is-mobile is-gapless">
+                <div class="column">
+                  <video autoplay controls muted loop playsinline width="100%" style="border-radius: 8px;">
+                    <source src="./static/video/base/Paper_and_Pen-Pi0+TACO-suc.mp4" type="video/mp4">
+                  </video>
+                  <p class="has-text-centered" style="margin-top: 0.5rem; font-weight: 600; color: #48c774;">$\pi_0$ + TACO ✓</p>
                 </div>
-                <br>
-                <h2 class="subtitle">
-                  <p style="text-align: justify">
-                  <!-- Given a scene, our approach (VRB) learns  <strong> actionable representations </strong> for robot learning. VRB predicts contact points and a post-contact trajectory learned from <strong> human videos </strong>.  -->
-                  In our five real-world experiments, TACO yields a 16.0% performance improvement. 
-                  Moreover, to reduce the latency introduced by sampling multiple actions during test-time scaling, we apply a KV-cache optimization that significantly decreases inference delay, 
-                  ensuring the control frequency and smoothness required for real-robot operation.                 
-                 </p>
-                </h2>
-                </td>
-              </tr>
+                <div class="column">
+                  <video autoplay controls muted loop playsinline width="100%" style="border-radius: 8px;">
+                    <source src="./static/video/base/Paper_and_Pen-Pi0-fail.mp4" type="video/mp4">
+                  </video>
+                  <p class="has-text-centered" style="margin-top: 0.5rem; font-weight: 600; color: #f14668;">$\pi_0$ ✗</p>
+                </div>
+              </div>
             </div>
+
+            <!-- Receive Book Task -->
+            <div class="column is-half">
+              <h4 class="title is-5 has-text-centered" style="margin-bottom: 1rem;">Receive Book</h4>
+              <div class="columns is-mobile is-gapless">
+                <div class="column">
+                  <video autoplay controls muted loop playsinline width="100%" style="border-radius: 8px;">
+                    <source src="./static/video/base/Receive_Book-Pi0+TACO-suc.mp4" type="video/mp4">
+                  </video>
+                  <p class="has-text-centered" style="margin-top: 0.5rem; font-weight: 600; color: #48c774;">$\pi_0$ + TACO ✓</p>
+                </div>
+                <div class="column">
+                  <video autoplay controls muted loop playsinline width="100%" style="border-radius: 8px;">
+                    <source src="./static/video/base/Receive_Book-Pi0-fail.mp4" type="video/mp4">
+                  </video>
+                  <p class="has-text-centered" style="margin-top: 0.5rem; font-weight: 600; color: #f14668;">$\pi_0$ ✗</p>
+                </div>
+              </div>
             </div>
+
+            <!-- Storage Charger Task -->
+            <div class="column is-half">
+              <h4 class="title is-5 has-text-centered" style="margin-bottom: 1rem;">Storage Charger</h4>
+              <div class="columns is-mobile is-gapless">
+                <div class="column">
+                  <video autoplay controls muted loop playsinline width="100%" style="border-radius: 8px;">
+                    <source src="./static/video/base/Storage_Charger -Pi0+TACO-suc.mp4" type="video/mp4">
+                  </video>
+                  <p class="has-text-centered" style="margin-top: 0.5rem; font-weight: 600; color: #48c774;">$\pi_0$ + TACO ✓</p>
+                </div>
+                <div class="column">
+                  <video autoplay controls muted loop playsinline width="100%" style="border-radius: 8px;">
+                    <source src="./static/video/base/Storage_Charger -Pi0-fail.mp4" type="video/mp4">
+                  </video>
+                  <p class="has-text-centered" style="margin-top: 0.5rem; font-weight: 600; color: #f14668;">$\pi_0$ ✗</p>
+                </div>
+              </div>
             </div>
+
+          </div>
+
+          <!-- Performance Charts -->
+          <div class="columns" style="margin-top: 3rem;">
+            <div class="column is-half">
+              <img src="./static/images/Exp_real_world.jpg" alt="Real World Experiments" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+            </div>
+            <div class="column is-half">
+              <img src="./static/images/time_cost.jpg" alt="Time Cost Analysis" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+            </div>
+          </div>
+
+          <!-- Summary Text -->
+          <div class="box" style="margin-top: 2rem; background-color: #f0f4f8; border-left: 4px solid #4a5568;">
+            <p style="font-size: 1.1rem; line-height: 1.8;">
+              In our five real-world experiments, TACO yields a <strong>16.0% performance improvement</strong>. 
+              Moreover, to reduce the latency introduced by sampling multiple actions during test-time scaling, we apply a KV-cache optimization that significantly decreases inference delay, 
+              ensuring the control frequency and smoothness required for real-robot operation.
+            </p>
           </div>
         </div>
       </div>
@@ -509,39 +528,47 @@
     
     
 
-    <!-- Safety Visualization Results -->
-    <section class="section body">
-      <div class="container">
-        <h2 class="title is-3" style="text-align: center; padding-bottom: 10px;">A comparison of key moments while grasping a marker</h2>
+    <!-- Detailed Comparison -->
+    <section class="section" style="background: linear-gradient(to bottom, #fafbfc 0%, #f5f7f9 100%);">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered" style="margin-bottom: 2rem;">
+          Key Moments: Grasping a Marker
+        </h2>
+        
         <div class="columns is-centered">
-
+          <!-- TACO Success -->
           <div class="column is-half">
-            <div class="card" style="border: 5px solid #E1BBD5; border-radius: 10px;">
+            <div class="card" style="border: 4px solid #48c774; border-radius: 12px; overflow: hidden; height: 100%;">
               <div class="card-image">
                 <video autoplay controls muted loop playsinline width="100%">
                   <source src="./static/video/more/pick_pen_good.mp4" type="video/mp4">
                 </video>
               </div>
               <div class="card-content">
-                <p class="title is-5" style="text-align: center;">$\pi_0$+TACO</p>
-                <p style="text-align: justify; font-size: 16px;">
-                  Using TACO for test-time scaling enables the robot to grasp the pen in a more optimal manner and eliminates hesitation during the grasping process. 
+                <p class="title is-5 has-text-centered" style="color: #48c774; margin-bottom: 1rem;">
+                  $\pi_0$ + TACO ✓
+                </p>
+                <p style="text-align: justify; font-size: 1rem; line-height: 1.7;">
+                  Using TACO for test-time scaling enables the robot to grasp the pen in a more optimal manner and eliminates hesitation during the grasping process.
                 </p>
               </div>
             </div>
           </div>
 
+          <!-- Baseline Failure -->
           <div class="column is-half">
-            <div class="card" style="border: 5px solid #95A9D0; border-radius: 10px;">
+            <div class="card" style="border: 4px solid #f14668; border-radius: 12px; overflow: hidden; height: 100%;">
               <div class="card-image">
                 <video autoplay controls muted loop playsinline width="100%">
                   <source src="./static/video/more/pick_pen_bad.mp4" type="video/mp4">
                 </video>
               </div>
               <div class="card-content">
-                <p class="title is-5" style="text-align: center;">$\pi_0$</p>
-                <p style="text-align: justify; font-size: 16px;">
-                  When using π₀ alone for inference, the robot tends to fall into suboptimal modes during grasping and often hesitates at the moment of grasp, leading to failures.                                                                                 
+                <p class="title is-5 has-text-centered" style="color: #f14668; margin-bottom: 1rem;">
+                  $\pi_0$ ✗
+                </p>
+                <p style="text-align: justify; font-size: 1rem; line-height: 1.7;">
+                  When using π₀ alone for inference, the robot tends to fall into suboptimal modes during grasping and often hesitates at the moment of grasp, leading to failures.
                 </p>
               </div>
             </div>
@@ -551,37 +578,38 @@
     </section>
 
 
-    <!-- 设置视频倍速 -->
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const videos = document.querySelectorAll('video'); // 选择所有 <video> 元素
-        videos.forEach(video => {
-          video.playbackRate = 1.5;
-          video.muted = true; // 设置静音
-        });
-      });
-    </script>
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const videos = document.querySelectorAll('video'); // 选择所有 <video> 元素
-        videos.forEach(video => {
-          video.playbackRate = 1.5; // 设置视频播放速度
-          video.muted = true; // 设置静音
-        });
-      });
-    </script>
     <!-- BibTeX -->
     <section class="section">
-      <div class="container">
-        <h2 class="title is-3">BibTeX</h2>
-        <pre>
-          @article{TACO,
-            title={Steering Vision-Language-Action Models as Anti-Exploration: A Test-Time Scaling Approach },
-            author={Siyuan Yang, Yang Zhang, Haoran He, Ling Pan, Xiu Li, Chenjia Bai, Xuelong Li},
-            year={2025}
-          }
-        </pre>
+      <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered" style="margin-bottom: 2rem;">BibTeX</h2>
+        <pre style="background-color: #f5f5f5; padding: 1.5rem; border-radius: 8px; border-left: 4px solid #4a5568; overflow-x: auto;">@article{yang2025taco,
+  title={Steering Vision-Language-Action Models as Anti-Exploration: A Test-Time Scaling Approach},
+  author={Siyuan Yang and Yang Zhang and Haoran He and Ling Pan and Xiu Li and Chenjia Bai and Xuelong Li},
+  journal={arXiv preprint arXiv:2512.02834},
+  year={2025}
+}</pre>
       </div>
     </section>
+
+    <footer class="footer">
+    <div class="container">
+      <div class="content has-text-centered">
+        <p>
+          Page template borrowed from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+    <!-- Video Speed Script -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const videos = document.querySelectorAll('video');
+        videos.forEach(video => {
+          video.playbackRate = 1.5;
+          video.muted = true;
+        });
+      });
+    </script>
   </body>
 </html>
